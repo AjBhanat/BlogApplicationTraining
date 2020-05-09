@@ -1,0 +1,32 @@
+  <h3>Posts</h3>
+
+  <div>
+    <%= link_to 'Write New Post', new_post_path %>
+  </div>
+  <br>
+  <table border="3">
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Content</th>
+      <th colspan='3'>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @posts.each do |p| %>
+      <tr>
+        <td><%= p.title %></td>
+        <td><%= p.body %></td>
+        <td><%= link_to 'Show', post_path(p) %></td>
+        <% if check_user(p.user_id) %>
+          <td>
+          <% if check_archive(p.status) %>
+            <%= link_to 'Edit', edit_post_path(p) %>
+          <% end %>
+          </td>
+          <td><%= link_to 'Delete', post_path(p), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%end %>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>

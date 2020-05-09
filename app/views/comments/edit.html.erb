@@ -1,0 +1,12 @@
+<div class='comment'>
+  <h4>Edit Comment</h4>
+
+  <%= form_for @comment do |f| %>
+    <p> Enter the comment:</p>
+    <p><%= f.text_area :description, placeholder:"description" %></p>
+
+    <%= f.submit 'Edit Comment' %>
+    </br>
+    <%= link_to 'Back', { controller: 'posts', action: 'show', id: f.post_id} %>
+  <% end %>
+</div>

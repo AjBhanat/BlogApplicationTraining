@@ -1,0 +1,61 @@
+<div class="container">
+  <h3>Post: <%= @post.title %> </h3>
+  <h4>Posted by: <%= @post.user.name  %></h4>
+
+  <div>
+    <label>Content:</label>
+    <%= @post.body %>
+  </div>
+
+  <div>
+    <%= link_to 'Back', { controller: 'posts', action: 'index'} %>
+    <% 
+       if check_user(@post.user_id) %>
+      <% if check_archive(@post.status) %>
+        | <%= link_to 'Edit', edit_post_path(@post) %>
+      <% end %>
+      | <%= link_to 'Delete', post_path(@post), method: :delete, data: { confirm: 'Are you sure?' } %>
+    </br>
+
+    <div>
+      <p>Post is <strong><%= @post.status %></strong></p>
+      <% if check_archive(@post.status)%>
+        <p>To Archive: </p><%= link_to 'Archive' , { action:  :status_change, id: @post.id } , data: { confirm: "Are you sure?" }, class: 'status_button'  %>
+      <% else %>
+        <p> To Activate:</p><%= link_to 'Activate', { action:  :status_change, id: @post.id }, data: { confirm: "Are you sure?" }, class: 'status_button'  %>
+      <% end %>
+    </div>
+  <% end %>
+  </div>
+
+  <div class='comment'>
+  <h4>Comments</h4>
+    <div>
+      <% @comments.each do |c| %>
+
+        <p><label>Comment:</label><%= c.description %></p>
+
+        <p><label>Commented by: </label><%= c.user.name %></p>
+
+        <% if check_user(c.user_id) %>
+          <p><%= link_to 'Edit', edit_post_path(@post) %> |
+          <%= link_to 'Delete', post_comment_path(c), method: :delete, data: { confirm: 'Are you sure?' } %></td></p>
+        <% end %>
+        </br>
+      <% end %>
+
+    </div>
+  </div>
+  <br>
+  <div class='comment'>
+    <h4>Add Comment</h4>
+    <%= form_for [ @post, @comment] do |f| %>
+      <p> Enter the comment:</p>
+      <p><%= f.text_area :description, placeholder:"description" %></p>
+      <%== hidden_field_tag('post_id', @post.id) %>
+
+      <%= f.submit 'Post Comment', controller: :comments %>
+      </br>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<h3>Create New Post</h3>
+<div class='container'>
+<div class='post'>
+  <%= form_for @post do |f| %>
+    <p> Enter the title: <%= f.text_field :title, placeholder:"title" %></p>
+    <p> Enter the body: <%= f.text_field :body, placeholder:"body" %></p>
+
+    <%= link_to 'Back', { controller: 'posts', action: 'index'} %>
+    </br>
+    <%= f.submit %>
+<% end %>
+</div>
+</div>
